@@ -1646,7 +1646,7 @@
 
     angular.module('bootstrap-select', [])
 
-        .directive('bootstrapSelect', function ($parse) {
+        .directive('bootstrapSelect', function ($parse, $timeout) {
             return {
                 restrict: 'A',
                 scope   : {
@@ -1656,10 +1656,15 @@
                 },
                 link    : function (scope, element, attrs) {
                     scope.$watch('[ngModel, watchModel]', function (newVals) {
+                        // 清除错误选项
                         $(element).find('option[value="? undefined:undefined ?"]').remove();
-                        $(element)
-                            .selectpicker(scope.bootstrapSelect() || {})
-                            .selectpicker('refresh');
+
+                        $timeout(function () {
+                            $(element)
+                                .val(newVals[0] || null)    // model to view
+                                .selectpicker(scope.bootstrapSelect() || {}) // config to element
+                                .selectpicker('refresh'); // refresh view
+                        }, 0);
                     }, true);
                 }
             }
