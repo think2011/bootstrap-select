@@ -403,7 +403,7 @@
             '</div>' +
             '</div>'
                 : '';
-            var donebutton = this.multiple && this.options.doneButton ?
+            var donebutton = this.options.doneButton ?
             '<div class="bs-donebutton">' +
             '<div class="btn-group btn-block">' +
             '<button type="button" class="btn btn-sm btn-default">' +
