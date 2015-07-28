@@ -1654,10 +1654,12 @@
                 },
                 link    : function (scope, element, attrs) {
                     scope.$watch('[ngModel, watchModel]', function (newVals) {
-                        $(element).selectpicker(scope.bootstrapSelect() || {}).selectpicker('refresh');
+                        $(element).find('option[value="? undefined:undefined ?"]').remove();
+                        $(element)
+                            .selectpicker(scope.bootstrapSelect() || {})
+                            .selectpicker('refresh');
                     }, true);
                 }
             }
         });
 })();
-

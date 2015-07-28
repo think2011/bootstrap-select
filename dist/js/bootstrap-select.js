@@ -426,7 +426,7 @@
             '</div>' +
             '</div>'
                 : '';
-            var donebutton = this.multiple && this.options.doneButton ?
+            var donebutton = this.options.doneButton ?
             '<div class="bs-donebutton">' +
             '<div class="btn-group btn-block">' +
             '<button type="button" class="btn btn-sm btn-default">' +
@@ -1660,6 +1660,32 @@
         })
     });
 })(jQuery);
+
+
+(function () {
+    if (typeof angular === 'undefined') return;
+
+    angular.module('bootstrap-select', [])
+
+        .directive('bootstrapSelect', function ($parse) {
+            return {
+                restrict: 'A',
+                scope   : {
+                    ngModel        : '=',
+                    watchModel     : '=',
+                    bootstrapSelect: '&'
+                },
+                link    : function (scope, element, attrs) {
+                    scope.$watch('[ngModel, watchModel]', function (newVals) {
+                        $(element).find('option[value="? undefined:undefined ?"]').remove();
+                        $(element)
+                            .selectpicker(scope.bootstrapSelect() || {})
+                            .selectpicker('refresh');
+                    }, true);
+                }
+            }
+        });
+})();
 
 
 }));
