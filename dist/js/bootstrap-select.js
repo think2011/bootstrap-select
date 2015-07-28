@@ -1558,17 +1558,19 @@
         },
 
         refresh: function () {
-            this.$lis  = null;
-            this.liObj = {};
-            this.reloadLi();
-            this.render();
-            this.checkDisabled();
-            this.liHeight(true);
-            this.setStyle();
-            this.setWidth();
-            if (this.$lis) this.$searchbox.trigger('propertychange');
+            setTimeout(function () {
+                this.$lis  = null;
+                this.liObj = {};
+                this.reloadLi();
+                this.render();
+                this.checkDisabled();
+                this.liHeight(true);
+                this.setStyle();
+                this.setWidth();
+                if (this.$lis) this.$searchbox.trigger('propertychange');
 
-            this.$element.trigger('refreshed.bs.select');
+                this.$element.trigger('refreshed.bs.select');
+            }.bind(this), 0);
         },
 
         hide: function () {
