@@ -1644,16 +1644,17 @@
 
     angular.module('bootstrap-select', [])
 
-        .directive('bootstrapSelect', function () {
+        .directive('bootstrapSelect', function ($parse) {
             return {
                 restrict: 'A',
                 scope   : {
-                    ngModel   : '=',
-                    watchModel: '='
+                    ngModel        : '=',
+                    watchModel     : '=',
+                    bootstrapSelect: '&'
                 },
                 link    : function (scope, element, attrs) {
                     scope.$watch('[ngModel, watchModel]', function (newVals) {
-                        $(element).selectpicker('refresh');
+                        $(element).selectpicker(scope.bootstrapSelect() || {}).selectpicker('refresh');
                     }, true);
                 }
             }
