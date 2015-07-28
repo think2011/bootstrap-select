@@ -1637,3 +1637,26 @@
         })
     });
 })(jQuery);
+
+
+(function () {
+    if (typeof angular === 'undefined') return;
+
+    angular.module('bootstrap-select', [])
+
+        .directive('bootstrapSelect', function () {
+            return {
+                restrict: 'A',
+                scope   : {
+                    ngModel   : '=',
+                    watchModel: '='
+                },
+                link    : function (scope, element, attrs) {
+                    scope.$watch('[ngModel, watchModel]', function (newVals) {
+                        $(element).selectpicker('refresh');
+                    }, true);
+                }
+            }
+        });
+})();
+
