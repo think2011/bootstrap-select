@@ -1657,7 +1657,7 @@
                 link    : function (scope, element, attrs) {
                     scope.$watch('[ngModel, watchModel]', function (newVals) {
                         // 清除错误选项
-                        $(element).find('option[value="? undefined:undefined ?"]').remove();
+                        $(element).find('option[value^="? "]').remove();
 
                         $timeout(function () {
                             $(element)

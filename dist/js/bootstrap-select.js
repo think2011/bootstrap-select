@@ -724,7 +724,7 @@
                 header     = this.options.header ? this.$menu.find('.popover-title')[0].cloneNode(true) : null,
                 search     = this.options.liveSearch ? document.createElement('div') : null,
                 actions    = this.options.actionsBox && this.multiple ? this.$menu.find('.bs-actionsbox')[0].cloneNode(true) : null,
-                doneButton = this.options.doneButton && this.multiple ? this.$menu.find('.bs-donebutton')[0].cloneNode(true) : null;
+                doneButton = this.options.doneButton ? this.$menu.find('.bs-donebutton')[0].cloneNode(true) : null;
 
             text.className       = 'text';
             newElement.className = this.$menu[0].parentNode.className + ' open';
@@ -1669,7 +1669,7 @@
 
     angular.module('bootstrap-select', [])
 
-        .directive('bootstrapSelect', function ($parse) {
+        .directive('bootstrapSelect', function ($parse, $timeout) {
             return {
                 restrict: 'A',
                 scope   : {
@@ -1679,10 +1679,15 @@
                 },
                 link    : function (scope, element, attrs) {
                     scope.$watch('[ngModel, watchModel]', function (newVals) {
-                        $(element).find('option[value="? undefined:undefined ?"]').remove();
-                        $(element)
-                            .selectpicker(scope.bootstrapSelect() || {})
-                            .selectpicker('refresh');
+                        // 清除错误选项
+                        $(element).find('option[value^="? "]').remove();
+
+                        $timeout(function () {
+                            $(element)
+                                .val(newVals[0] || null)    // model to view
+                                .selectpicker(scope.bootstrapSelect() || {}) // config to element
+                                .selectpicker('refresh'); // refresh view
+                        }, 0);
                     }, true);
                 }
             }
