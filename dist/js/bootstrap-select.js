@@ -1694,10 +1694,11 @@
 			scope: {
 				ngModel: '=',
 				watchModel: '=',
-				bootstrapSelect: '&'
+				bootstrapSelect: '&',
+				disabled: '@'
 			},
 			link: function(scope, element, attrs) {
-				scope.$watch('[ngModel, watchModel]', function(newVals) {
+				scope.$watch('[ngModel, watchModel, disabled]', function(newVals) {
 					// 清除错误选项
 					$(element).find('option[value^="? "]').remove();
 
